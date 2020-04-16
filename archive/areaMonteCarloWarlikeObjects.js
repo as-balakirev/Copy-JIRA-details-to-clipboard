@@ -37,7 +37,8 @@ function Quadrat(topLeftPoint, length) {
  * @param {Circle} circle
  * @param {number} accuracy
  */
-function areaCircleMonteCarlo(circle, accuracy) {
+function areaCircleMonteCarlo(radius, accuracy) {
+    let circle = new Circle(radius);
     let topLeftPointQuadrat = new Point(-circle.radius, circle.radius);
     let quadrat = new Quadrat(topLeftPointQuadrat, circle.radius * 2);
     let pointCounter = 0;
@@ -49,4 +50,31 @@ function areaCircleMonteCarlo(circle, accuracy) {
     return pointCounter / accuracy * quadrat.getArea();
 }
 
-console.log(areaCircleMonteCarlo(new Circle(3), 10000000));
+//console.log(areaCircleMonteCarlo(3, 100000000));
+
+function cashingDecorator (func) {
+    let cache = new Map();
+
+    return function () {
+        let key = hash(arguments);
+        if (cache.has(key)) {
+            console.log('cashed');
+            return cache.get(key);
+        }
+
+        let result = func.call(this, ...arguments);
+        console.log('function call');
+        cache.set(key, result);
+        return result;
+    }
+}
+
+function hash (args) {
+    return args[0] + ',' + args[1];
+}
+
+areaCircleMonteCarlo = cashingDecorator(areaCircleMonteCarlo);
+
+console.log(areaCircleMonteCarlo(3, 100000000));
+console.log(areaCircleMonteCarlo(3, 100000000));
+console.log(areaCircleMonteCarlo(3, 100000000));

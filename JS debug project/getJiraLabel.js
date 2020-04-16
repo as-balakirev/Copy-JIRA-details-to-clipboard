@@ -1,17 +1,4 @@
-function createJiraLabelButton() {
-    let aElement = document.createElement('a');
-    aElement.classList.add('aui-button', 'toolbar-trigger', 'issueaction-workflow-transition');
-    let scriptElement = document.createElement('script');
-    aElement.appendChild(scriptElement);
-    let buttonLabel = document.createTextNode('custom button label');
-    aElement.appendChild(buttonLabel);
-    let opsBarElement = document.getElementById('opsbar-opsbar-transitions');
-    let parentDiv = document.getElementById('opsbar-opsbar-transitions').parentNode;
-    parentDiv.insertBefore(aElement, opsBarElement);
-}
-
-
-
+//document.body.onload = createJiraLabelButton;
 
 function String (str) {
     this.str = str;
@@ -48,6 +35,7 @@ function getJiraLabel (str) {
         }
         string.str = string.str.replace(`\[${value}\]`, findLabel(value));
     }
+    copyToClipboard(string.str);
     return string.str;
 }
 
@@ -63,4 +51,29 @@ function findLabel (string) {
     }
 }
 
-console.log(getJiraLabel('[ticketNo] / [ticketTitle] / [Type:] / [Priority:] / [Epic Link:] some  text'));
+function copyToClipboard(text) {
+    let input = document.createElement('textarea');
+    input.innerHTML = text;
+    document.body.appendChild(input);
+    input.select();
+    let result = document.execCommand('copy');
+    document.body.removeChild(input);
+    return result;
+}
+
+function createJiraLabelButton() {
+    let aElement = document.createElement('a');
+    aElement.classList.add('aui-button', 'toolbar-trigger', 'issueaction-workflow-transition');
+    let scriptElement = document.createElement('script');
+    aElement.appendChild(scriptElement);
+    let buttonLabel = document.createTextNode('custom button label');
+    aElement.appendChild(buttonLabel);
+    let opsBarElement = document.getElementById('opsbar-opsbar-transitions');
+    let parentDiv = document.getElementById('opsbar-opsbar-transitions').parentNode;
+    parentDiv.insertBefore(aElement, opsBarElement);
+    aElement.onclick = function () {
+        getJiraLabel('[ticketNo] / [ticketTitle] / [Type:] / [Priority:] / [Epic Link:] some  text');
+    }
+}
+
+createJiraLabelButton();
