@@ -1,5 +1,3 @@
-//document.body.onload = createJiraLabelButton;
-
 function String (str) {
     this.str = str;
     this.valuesToArray = function () {
@@ -72,8 +70,21 @@ function createJiraLabelButton() {
     let parentDiv = document.getElementById('opsbar-opsbar-transitions').parentNode;
     parentDiv.insertBefore(aElement, opsBarElement);
     aElement.onclick = function () {
-        getJiraLabel('[ticketNo] / [ticketTitle] / [Type:] / [Priority:] / [Epic Link:]');
+        let getting = browser.storage.sync.get("jiraString");
+        getting.then(onGot, onError);
     }
 }
+
+function onError(error) {
+    console.log(`Error: ${error}`);
+  }
+
+function onGot(item) {
+    let value = "[ticketNo] / [ticketTitle] / [Type:] / [Priority:] / [Epic Link:]";
+    if (item.jiraString) {
+      value = item.jiraString;
+    }
+    getJiraLabel(value);
+  }
 
 createJiraLabelButton();

@@ -1,21 +1,33 @@
 {
 
-    "manifest_version": 2,
-    "name": "getJiraLabel",
-    "version": "1.0",
-  
-    "description": "Adds get Jira Label button to all web pages matching jira.ipipeline.com/browse/",
-  
-    "icons": {
-      "48": "icons/vertical_split-black-18dp.svg",
-      "96": "icons/vertical_split-black-18dp.svg"
-    },
-  
-    "content_scripts": [
-      {
-        "matches": ["*://jira.ipipeline.com/browse/*"],
-        "js": ["getJiraLabel.js"]
-      }
-    ]
-  
+  "manifest_version": 2,
+  "name": "getJiraLabel",
+  "version": "1.0",
+
+  "description": "Adds get Jira Label button to all web pages matching jira.ipipeline.com/browse/",
+
+  "icons": {
+    "48": "icons/vertical_split-black-18dp.svg",
+    "96": "icons/vertical_split-black-18dp.svg"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://jira.ipipeline.com/browse/*"],
+      "js": ["getJiraLabel.js"]
+    }
+  ],
+
+  "options_ui": {
+    "page": "options.html"
+  },
+
+  "permissions": ["storage"],
+
+  "applications": {
+    "gecko": {
+      "id": "asbalakirev@gmail.com"
+    }
   }
+
+}
