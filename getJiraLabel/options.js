@@ -1,7 +1,7 @@
 function saveOptions(e) {
     e.preventDefault();
     browser.storage.sync.set({
-      jiraString: document.getElementById("jiraString").value
+      templateJiraString: document.getElementById("templateJiraString").value
     });
   }
 
@@ -9,14 +9,14 @@ function saveOptions(e) {
   function restoreOptions() {
 
     function setCurrentChoice(result) {
-      document.getElementById("jiraString").value = result.jiraString || "[ticketNo] / [ticketTitle] / [Type:] / [Priority:] / [Epic Link:]";
+      document.getElementById("templateJiraString").value = result.templateJiraString || "{ticketNo} / {ticketTitle} / {Type} / {Priority} / {Status}";
     }
 
     function onError(error) {
         console.log(`Error: ${error}`);
     }
 
-    let getting = browser.storage.sync.get("jiraString");
+    let getting = browser.storage.sync.get("templateJiraString");
     getting.then(setCurrentChoice, onError);
 
   } 

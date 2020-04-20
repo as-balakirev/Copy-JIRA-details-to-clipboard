@@ -4,38 +4,22 @@
   <head>
     <meta charset="utf-8">
   </head>
-
+  <style>
+    .default {font-family: sans-serif;}
+  </style>
   <body>
 
     <form style="padding: 5px">
-        <label>Get JIRA Label string<input style="width: 70%;" type="text" id="jiraString" ></label>
-        <button type="submit">Save</button>
+        <label class="default">Jira Labels Template:&nbsp;<input style="width: 70%;" type="text" id="templateJiraString"></label>
+        <button class="default" type="submit" style="display:block">Save</button>
     </form>
 
     <script src="options.js"></script>
 
 
-    <p style="padding: 5px">Available options:
-      <ul id="valuesList">
-        <li>[ticketNo]</li>
-        <li>[ticketTitle]</li>
-        <li>[Type:]</li>
-        <li>[Priority:]</li>
-        <li>[Affects Version/s:]</li>
-        <li>[Component/s:]</li>
-        <li>[Labels:]</li>
-        <li>[Projector Project ID:]</li>
-        <li>[Epic Link:]</li>
-        <li>[Sprint:]</li>
-        <li>[Billable:]</li>
-        <li>[Issue Found In:]</li>
-        <li>[Imported:]</li>
-        <li>[Status:]</li>
-        <li>[Resolution:]</li>
-        <li>[Fix Version/s:]</li>
-        <li>[Security Level:]</li>
-      </ul>
-      </p>
+    <h4 class="default">The addon is used to copy values of all specified labels from issue details section in JIRA.</h4>
+    <p style="padding: 5px" class="default">A jira label wrapped in <code>{ }</code> returns it's value. A "<code>{ticketNo}</code>" and "<code>{ticketTitle}</code>" are tied for JIRA number and JIRA summary respectively. Template string consists of JIRA labels and any text.</p>
+    <p style="padding: 5px" class="default">For example, template: "<code>{ticketNo} / {ticketTitle} / {Type} / {Priority}</code>", copies to the clipboard a string: "<code>EXMPL-123 / Example JIRA summary / Story / Medium</code>".</p>
   </body>
 
 </html>
