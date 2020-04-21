@@ -1,10 +1,10 @@
 {
 
   "manifest_version": 2,
-  "name": "getJiraLabel",
-  "version": "1.0",
+  "name": "Copy JIRA details to Clipboard",
+  "version": "1.01",
 
-  "description": "Adds get Jira Label button to all web pages matching jira.*/browse/",
+  "description": "Adds 'Copy to Clibboard' button to all JIRA issue web pages (matching /browse/)",
 
   "icons": {
     "48": "icons/vertical_split-black-18dp.svg",

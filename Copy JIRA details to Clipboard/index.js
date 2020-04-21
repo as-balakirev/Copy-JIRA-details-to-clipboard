@@ -57,7 +57,7 @@ function copyToClipboard(text) {
 function createJiraLabelButton() {
     let aElement = document.createElement('a');
     aElement.classList.add('aui-button', 'toolbar-trigger', 'issueaction-workflow-transition');
-    let buttonLabel = document.createTextNode('Get Jira Labels');
+    let buttonLabel = document.createTextNode('Copy to Clipboard');
     aElement.appendChild(buttonLabel);
     let opsBarElement = document.getElementById('opsbar-opsbar-transitions');
     let parentDiv = document.getElementById('opsbar-opsbar-transitions').parentNode;
