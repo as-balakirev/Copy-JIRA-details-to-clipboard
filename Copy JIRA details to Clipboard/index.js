@@ -29,8 +29,8 @@ function getJiraLabelValue (jiraLabelName) {
         label = document.getElementById('summary-val').textContent || document.getElementById('summary-val').innerText;
         return label;
     } 
-    if (jiraLabelName == 'ticketNo') {
-        label = document.getElementById('key-val').textContent || document.getElementById('key-val').innerText;
+    if (jiraLabelName == 'ticketNo') { 
+        label = document.getElementById('key-val').parentElement.innerHTML;
         return label;
     }
     let itemHtmlCollection = document.getElementsByClassName('item');
@@ -45,11 +45,19 @@ function getJiraLabelValue (jiraLabelName) {
 }
 
 function copyToClipboard(text) {
+    function listener(e) {
+        e.clipboardData.setData("text/html", text);
+        text = text.replace(/\<.+?\>/g, '');
+        e.clipboardData.setData("text/plain", text);
+        e.preventDefault();
+      }
     let input = document.createElement('textarea');
     input.innerHTML = text;
     document.body.appendChild(input);
     input.select();
+    document.addEventListener('copy', listener);
     let result = document.execCommand('copy');
+    document.removeEventListener('copy', listener);
     document.body.removeChild(input);
     return result;
 }
