@@ -31,7 +31,6 @@ function copyJiraLabelToClipboard(templateString) {
     for (let value of string.valuesToArray()) {
         stringToCopy.plainTextString = stringToCopy.plainTextString.replace(`\{${value}\}`, getJiraLabelValue(value));
         stringToCopy.htmlTextString = stringToCopy.htmlTextString.replace(`\{${value}\}`, getJiraLabelValue(value, 'html'));
-        //string.templateString = string.templateString.replace(`\{${value}\}`, getJiraLabelValue(value));
     }
     copyToClipboard(stringToCopy);
 }
@@ -114,4 +113,4 @@ function onGot(item) {
 }
 
 
-window.addEventListener('load', createJiraLabelButton());
+createJiraLabelButton();
