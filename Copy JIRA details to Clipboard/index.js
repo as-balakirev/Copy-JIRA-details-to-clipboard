@@ -39,19 +39,20 @@ function copyJiraLabelToClipboard(templateString) {
 
 function getJiraLabelValue(jiraLabelName, type) {
     if (jiraLabelName == 'ticketTitle') {
-        label = document.getElementById('summary-val').textContent || document.getElementById('summary-val').innerText;
+        let label = document.getElementById('summary-val').textContent || document.getElementById('summary-val').innerText;
         return label;
     }
     if (jiraLabelName == 'ticketNo') {
-        label = document.getElementById('key-val').textContent || document.getElementById('key-val').innerText;
+        let label = document.getElementById('key-val').textContent || document.getElementById('key-val').innerText;
         return label;
     }
     if (jiraLabelName == 'ticketUrl') {
         if (type == 'html') {
-            label = document.getElementById('key-val').parentElement.innerHTML;
+            let label = document.getElementById('key-val').parentElement.innerHTML;
+            label = label.replace(/\"\/browse\/.+\"/, `"${window.location.href}"`);
             return label;
         }
-        label = window.location.href;
+        let label = window.location.href;
         return label;
     }
     let itemHtmlCollection = document.getElementsByClassName('item');
@@ -113,4 +114,4 @@ function onGot(item) {
 }
 
 
-createJiraLabelButton();
+window.addEventListener('load', createJiraLabelButton());
