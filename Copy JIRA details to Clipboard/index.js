@@ -15,7 +15,10 @@ function TemplateString(templateString) {
     }
 }
 
-
+/**
+ * 
+ * @param {TemplateString} string
+ */
 function StringToCopy(string) {
     this.plainTextString = string.templateString;
     this.htmlTextString = string.templateString;
@@ -65,22 +68,19 @@ function getJiraLabelValue(jiraLabelName, type) {
     }
 }
 
-
+/**
+ * 
+ * @param {StringToCopy} objectToCopy 
+ */
 function copyToClipboard(objectToCopy) {
     function listener(e) {
         e.clipboardData.setData("text/html", objectToCopy.htmlTextString);
         e.clipboardData.setData("text/plain", objectToCopy.plainTextString);
         e.preventDefault();
     }
-    let input = document.createElement('textarea');
-    input.innerHTML = objectToCopy.toString();
-    document.body.appendChild(input);
-    input.select();
     document.addEventListener('copy', listener);
-    let result = document.execCommand('copy');
+    document.execCommand('copy');
     document.removeEventListener('copy', listener);
-    document.body.removeChild(input);
-    return result;
 }
 
 
