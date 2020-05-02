@@ -113,4 +113,21 @@ function onGot(item) {
 }
 
 
+function createObserver() {
+    let target = document.querySelector('#content');
+    let observer = new MutationObserver(function (mutations) {
+        for (let mutation of mutations) {
+            if (mutation.target.baseURI.includes(document.getElementById('key-val').textContent || document.getElementById('key-val').innerText)) {
+                console.log(mutation);
+                createJiraLabelButton();
+                break;
+            }
+        }
+    });
+
+    observer.observe(target, { attributeFilter: ["href"], subtree: true });
+}
+
+
 createJiraLabelButton();
+createObserver();
