@@ -1,3 +1,7 @@
+if (document.body.id != 'jira') {
+    throw new Error();
+}
+
 function TemplateString(templateString) {
     this.templateString = templateString;
     this.valuesToArray = function () {
