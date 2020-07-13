@@ -93,8 +93,8 @@ function createJiraLabelButton() {
     aElement.classList.add('aui-button', 'toolbar-trigger', 'issueaction-workflow-transition');
     let buttonLabel = document.createTextNode('Copy to Clipboard');
     aElement.appendChild(buttonLabel);
-    let opsBarElement = document.getElementById('opsbar-opsbar-transitions');
-    let parentDiv = document.getElementById('opsbar-opsbar-transitions').parentNode;
+    let opsBarElement = document.getElementById('opsbar-opsbar-operations'); //document.getElementById('opsbar-opsbar-transitions') || 
+    let parentDiv = document.getElementById('opsbar-opsbar-operations').parentNode; //document.getElementById('opsbar-opsbar-transitions') || 
     parentDiv.insertBefore(aElement, opsBarElement);
     aElement.onclick = function () {
         let getting = browser.storage.sync.get("templateJiraString");
@@ -122,7 +122,6 @@ function createObserver() {
     let observer = new MutationObserver(function (mutations) {
         for (let mutation of mutations) {
             if (mutation.target.baseURI.includes(document.getElementById('key-val').textContent || document.getElementById('key-val').innerText)) {
-                console.log(mutation);
                 createJiraLabelButton();
                 break;
             }

@@ -1,79 +1,61 @@
-//document.body.onload = createJiraLabelButton;
+'use strict';
 
-function String (str) {
-    this.str = str;
-    this.valuesToArray = function () {
-        let valuesArray = [];
-        let isFound = false;
-        let foundPos1 = -1;
-        while ((foundPos1 = this.str.indexOf('\[', foundPos1 + 1)) !== -1) {
-            let foundPos2 = foundPos1;
-            while ((foundPos2 = this.str.indexOf('\]', foundPos2 + 1)) !== -1) {
-                valuesArray.push(this.str.slice(foundPos1 + 1, foundPos2));
-                isFound = true;
-                foundPos1 = foundPos2 + 1;
-                break;
-            }
+/**
+ * 
+ * @param {Date} dateOfBirth 
+ */
+
+function calculatePolicyDate (dateOfBirth) {
+    let policyDate;
+    dateOfBirth = new Date(dateOfBirth);
+    let todayDate = new Date();
+    let maxBackdate = addDays(todayDate, -30);
+    let crossOverDate = addDays(dateOfBirth, 182);
+    crossOverDate.setFullYear(todayDate.getFullYear());
+    if (crossOverDate > todayDate) {
+        if (todayDate.getDate() == 29 || todayDate.getDate() == 30 || todayDate.getDate() == 31) {
+            todayDate.setDate(28);
         }
-        if (isFound == false) {
-            console.log('no values found!');
-            return undefined;
-        }
-        return valuesArray;
+        policyDate = todayDate;
+        console.log(policyDate);
+        return policyDate;
+    } else if (!(crossOverDate <= maxBackdate)) {
+        console.log('Insured is not eligible for backdating.');
+        return new Error('Insured is not eligible for backdating.');
+    } else {
+        policyDate = crossOverDate;
+        console.log(policyDate);
+        return crossOverDate;
     }
 }
 
-function getJiraLabel (str) {
-    let string = new String (str);
-    for (let value of string.valuesToArray()) {
-        if (value == 'ticketTitle') {
-            string.str = string.str.replace (`\[${value}\]`, document.getElementById('summary-val').textContent || document.getElementById('summary-val').innerText);
-            continue;
-        } else if (value == 'ticketNo') {
-            string.str = string.str.replace(`\[${value}\]`, document.getElementById('key-val').textContent || document.getElementById('key-val').innerText);
-            continue;
-        }
-        string.str = string.str.replace(`\[${value}\]`, findLabel(value));
+
+/**
+ * 
+ * @param {Date} date 
+ * @param {number} daysToAdd 
+ */
+function addDays (date, daysToAdd) {
+    let d = new Date (date);
+    d.setDate(date.getDate() + daysToAdd);
+    return d;
+}
+
+/**
+ * 
+ * @param {Date} dateOfBirth 
+ */
+function calculateLastBirthday (dateOfBirth) {
+    let lastBirthday = new Date(dateOfBirth);
+    let todayDate = new Date();
+    if (todayDate < lastBirthday.setFullYear(todayDate.getFullYear())) {
+        lastBirthday.setFullYear(todayDate.getFullYear() - 1);
+        return lastBirthday;
     }
-    copyToClipboard(string.str);
-    return string.str;
+    lastBirthday.setFullYear(todayDate.getFullYear());
+    return lastBirthday;
 }
 
-function findLabel (string) {
-    let strongHtmlCollection = document.getElementsByClassName('item');
-    for (let value of strongHtmlCollection ) {
-        if (value.innerHTML.includes(string)) {
-            let label = value.textContent ? value.textContent : value.innerText;
-            label = label.replace(/\s{2,}/g, '');
-            label = label.replace(string, '');
-            return label;
-        }
-    }
-}
 
-function copyToClipboard(text) {
-    let input = document.createElement('textarea');
-    input.innerHTML = text;
-    document.body.appendChild(input);
-    input.select();
-    let result = document.execCommand('copy');
-    document.body.removeChild(input);
-    return result;
-}
-
-function createJiraLabelButton() {
-    let aElement = document.createElement('a');
-    aElement.classList.add('aui-button', 'toolbar-trigger', 'issueaction-workflow-transition');
-    let scriptElement = document.createElement('script');
-    aElement.appendChild(scriptElement);
-    let buttonLabel = document.createTextNode('custom button label');
-    aElement.appendChild(buttonLabel);
-    let opsBarElement = document.getElementById('opsbar-opsbar-transitions');
-    let parentDiv = document.getElementById('opsbar-opsbar-transitions').parentNode;
-    parentDiv.insertBefore(aElement, opsBarElement);
-    aElement.onclick = function () {
-        getJiraLabel('[ticketNo] / [ticketTitle] / [Type:] / [Priority:] / [Epic Link:] some  text');
-    }
-}
-
-createJiraLabelButton();
+//calculatePolicyDate('2000-12-10');
+calculateLastBirthday('2000-07-22');
