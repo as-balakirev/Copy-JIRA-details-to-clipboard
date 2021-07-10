@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+</head>
+<style>
+  .templateString {
+    font-family: sans-serif;
+    color: green;
+  }
+
+  .default {
+    font-family: sans-serif;
+    margin: 15px;
+  }
+</style>
+
+<body>
+  <div class="default">
+    <form>
+      <label class="templateString"><b>Jira Details Template:&nbsp;</b><input style="width: 70%;" type="text"
+          id="templateJiraString"></label>
+      <button type="submit" style="display:block">Save</button>
+    </form>
+
+    <script src="options.js"></script>
+
+    <h4>The addon adds "Copy to Clipboard" button to the jira ticket menu. Button is used to copy values from details section in jira to the clipboard for all specified labels.</h4>
+    <p>A jira label wrapped in <code>{ }</code> returns it's value. Template string can consist of JIRA labels and any text.</p>
+    <p><b>Additional Values:</b>
+      <ul>
+        <li><code>{ticketNo}</code> - returns a short jira ticket. For example - <code>EXMPL-123</code>;</li>
+        <li><code>{ticketTitle}</code> - returns a jira summary;</li>
+        <li><code>{ticketUrl}</code> - returns a ticket url. Supports rich text. Returns a plain url (e.g.
+          https://jira/browse/EXMPL-123) OR html url - <a href="#">EXMPL-123</a>, if supported by application.</li>
+      </ul>
+
+    </p>
+    <p>For example, template:
+      "<code>{ticketNo} / {ticketTitle} / {Type} / {Priority}</code>", copies to the clipboard a string:
+      "<code>EXMPL-123 / Example JIRA summary / Story / Medium</code>".</p>
+  </div>
+</body>
+
+</html>
